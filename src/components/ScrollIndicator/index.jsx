@@ -9,7 +9,7 @@ const bounce = keyframes`
   100% { transform: translateY(0); opacity: 1; }
 `;
 
-const ScrollIndicator = () => {
+const ScrollIndicator = ({ color = 'content.tint1', }) => {
   const [show, setShow] = useState(false);
   const [isScrollLocked, setIsScrollLocked] = useState(
     document.body.hasAttribute("data-scroll-lock")
@@ -33,7 +33,7 @@ const ScrollIndicator = () => {
       if (!isFooterVisible() && !isScrollLocked) {
         setShow(true);
       }
-    }, 2000);
+    }, 2500);
   };
 
   useEffect(() => {
@@ -48,7 +48,6 @@ const ScrollIndicator = () => {
     };
   }, [isScrollLocked]);
 
-  // ✅ 監聽 body 的 data-scroll-lock 變化
   useEffect(() => {
     const observer = new MutationObserver(() => {
       setIsScrollLocked(document.body.hasAttribute("data-scroll-lock"));
@@ -91,7 +90,7 @@ const ScrollIndicator = () => {
         <Box
           w="6px"
           h="6px"
-          bg="content.tint1"
+          bg={color}
           borderRadius="full"
           animation={`${bounce} 2.5s infinite`}
         />

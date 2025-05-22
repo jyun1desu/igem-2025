@@ -1,6 +1,6 @@
 import { Box, Flex, Grid, Image, List, ListItem, Text, Dialog, Portal, Button, CloseButton } from "@chakra-ui/react"
+import { useActiveSection } from "@/hooks/useActiveSection";
 import { ADVISORS, INSTRUCTORS_N_ASSISTANT, PRINCIPAL_INVESTIGATORS, STUDENTS } from "../const";
-import { useEffect, useState } from "react";
 
 const SECTION_IDS = {
     STUDENTS: 'STUDENTS',
@@ -167,31 +167,10 @@ const MemberCard = ({
 }
 
 const TeamMembersSection = () => {
-    const [activeTab, setActiveTab] = useState(SECTION_IDS.STUDENTS);
-
-    useEffect(() => {
-        const handleScroll = () => {
-          for (const id of SECTIONS) {
-            const section = document.getElementById(id);
-            if (!section) continue;
-    
-            const rect = section.getBoundingClientRect();
-            const isPastHalf = rect.top < window.innerHeight / 2.5;
-            console.log({
-                t: rect.top,
-                m: window.innerHeight / 5,
-            })
-    
-            if (isPastHalf) {
-                setActiveTab(id);
-            }
-          }
-        };
-    
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, []);
+    const activeTab = useActiveSection({
+        sectionIds: SECTIONS,
+        thresholdRatio: 2.5
+    })
 
     return (
         <Flex alignItems="flex-start" gap="28">
