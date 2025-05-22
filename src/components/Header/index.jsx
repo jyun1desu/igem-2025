@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router";
 import { Box, Flex, Stack, Text } from "@chakra-ui/react"
 import { NAVS, navConfig } from "@/configs/navigation";
 import { useRef, useState } from "react";
+import Logo from "../Logo";
 
 const HEADER_HEIGHT = 70;
 const navsOrder = [NAVS.HOME, NAVS.TEAM, NAVS.PROJECT, NAVS.WET_LAB, NAVS.DRY_LAB, NAVS.OUR_MODEL, NAVS.HUMAN_PRACTICE];
@@ -130,7 +131,9 @@ const Header = () => {
                 position="fixed"
                 width="100%"
             >
-                <Box>Logo</Box>
+                <Box>
+                    <Logo />
+                </Box>
                 <Flex ml="auto"
                     onMouseLeave={() => {
                         setHoveredItem('')

@@ -15,7 +15,7 @@ const Home = () => {
                             color="content.tint1"
                             lineHeight={1}
                         >HeartBeaters</Text>
-                        <Text color="content.secondary" textStyle="md" mt="3">
+                        <Text color="content.primary" textStyle="md" mt="2">
                         A nucleic acid-based biosensor for early diagnostic of cardiovascular diseases <Text as="span" color="content.red">cardiovascular diseases</Text>
                         </Text>
                     </Box>
