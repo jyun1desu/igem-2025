@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from "react-router";
+import { Link, useLocation } from "react-router";
 import { Box, Flex, Stack, Text } from "@chakra-ui/react"
 import { NAVS, navConfig } from "@/configs/navigation";
 import { useRef, useState } from "react";
@@ -112,11 +112,10 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
 
 const Header = () => {
     const location = useLocation();
-    const { tab: currentTab } = useParams();
     const [hoveredItem, setHoveredItem] = useState('');
 
     const segments = location.pathname.split("/");
-    const section = segments[1];
+    const [_, section, currentTab ]= segments;
 
     return (
         <>

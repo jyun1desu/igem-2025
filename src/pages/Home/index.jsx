@@ -1,26 +1,9 @@
 import { Box, Flex, Text } from "@chakra-ui/react"
-
-const FullHeightSectionContainer = ({ children, bg, ...props }) => {
-    return (
-        <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            px="28"
-            py="12"
-            bg={bg}
-            width="100%"
-            height="calc(100dvh - 70px)"
-            {...props}
-        >
-            {children}
-        </Box>
-    )
-}
+import FullHeightSectionContainer from "@/components/FullHeightSectionContainer";
 
 const Home = () => {
     return (
-        <Box pt="70px">
+        <Box>
             <FullHeightSectionContainer>
                 <Flex gap="6">
                     <Box>團隊 LOGO</Box>

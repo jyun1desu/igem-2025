@@ -6,6 +6,8 @@ const customConfig = defineConfig({
       colors: {
         bg: {
           primary: '#f9f9f9ff',
+          secondary: '#44a6bd26',
+          dialog: '#f2f2f2',
         },
         content: {
           primary: '#757070',
@@ -17,6 +19,7 @@ const customConfig = defineConfig({
         },
         border: {
           primary: '#d0cece',
+          secondary: '#aeabab',
         }
       },
       space: { 

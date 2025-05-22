@@ -8,7 +8,7 @@ const Layout = () => {
     return (
         <Box minHeight="100dvh" display="flex" flexDir="column">
             <Header flex="0 0 auto" />
-            <Box flex="1 1 auto">
+            <Box flex="1 1 auto" pt="70px">
                 <Outlet />
             </Box>
             <Footer flex="0 0 auto" />

@@ -11,6 +11,9 @@ const bounce = keyframes`
 
 const ScrollIndicator = () => {
   const [show, setShow] = useState(false);
+  const [isScrollLocked, setIsScrollLocked] = useState(
+    document.body.hasAttribute("data-scroll-lock")
+  );
   const timeoutRef = useRef(null);
   const location = useLocation();
 
@@ -27,15 +30,15 @@ const ScrollIndicator = () => {
     setShow(false);
 
     timeoutRef.current = setTimeout(() => {
-      if (!isFooterVisible()) {
+      if (!isFooterVisible() && !isScrollLocked) {
         setShow(true);
       }
-    }, 3000);
+    }, 2000);
   };
 
   useEffect(() => {
     resetTimer();
-  }, [location.pathname]);
+  }, [location.pathname, isScrollLocked]);
 
   useEffect(() => {
     window.addEventListener("scroll", resetTimer);
@@ -43,6 +46,20 @@ const ScrollIndicator = () => {
       window.removeEventListener("scroll", resetTimer);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
+  }, [isScrollLocked]);
+
+  // ✅ 監聽 body 的 data-scroll-lock 變化
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsScrollLocked(document.body.hasAttribute("data-scroll-lock"));
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["data-scroll-lock"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -86,6 +103,4 @@ const ScrollIndicator = () => {
   );
 }
 
-
 export default ScrollIndicator;
-
