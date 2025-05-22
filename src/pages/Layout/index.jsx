@@ -1,10 +1,16 @@
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import { Box, Text } from "@chakra-ui/react"
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollIndicator from "@/components/ScrollIndicator";
+import { useEffect } from "react";
 
 const Layout = () => {
+    const location = useLocation();
+
+    useEffect(()=>{
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    },[location.pathname])
     return (
         <Box minHeight="100dvh" display="flex" flexDir="column">
             <Header flex="0 0 auto" />
