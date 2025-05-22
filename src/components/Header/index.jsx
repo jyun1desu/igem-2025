@@ -1,0 +1,157 @@
+import { Link, useLocation, useParams } from "react-router";
+import { Box, Flex, Stack, Text } from "@chakra-ui/react"
+import { NAVS, navConfig } from "@/configs/navigation";
+import { useRef, useState } from "react";
+
+const HEADER_HEIGHT = 70;
+const navsOrder = [NAVS.HOME, NAVS.TEAM, NAVS.PROJECT, NAVS.WET_LAB, NAVS.DRY_LAB, NAVS.OUR_MODEL, NAVS.HUMAN_PRACTICE];
+
+const navs = navsOrder.map(navKey => {
+    return navConfig[navKey]
+});
+
+const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
+    const { label, children = [], href } = nav;
+    const navButtonRef = useRef();
+
+    const leftDistance = navButtonRef.current?.getBoundingClientRect()?.left || 0;
+    return (
+        <Box
+            key={label}
+            position="relative"
+            px="4"
+            py="2"
+            onMouseEnter={() => {
+                setHoveredItem(href)
+            }}
+            onMouseLeave={() => {
+                setHoveredItem('')
+            }}
+        >
+            <Link ref={navButtonRef}
+                to={!children.length
+                    ? href
+                    : `${href}/${children[0].slug}`
+                }
+                onClick={() => {
+                    setHoveredItem('')
+                }}
+            >
+                <Text
+                    position="relative"
+                    whiteSpace="nowrap"
+                    color={isActive ? 'content.tint2' : 'content.primary'}
+                    _hover={{
+                        color: 'content.tint2',
+                    }}
+                >
+                    {label}
+                    <Box
+                        position="absolute"
+                        top="calc(100% + 2px)"
+                        width={isHovered ? '100%' : 0}
+                        height="2px"
+                        bg="content.tint2"
+                        borderRadius="10px"
+                        transition="0.2s all"
+                    />
+                </Text>
+            </Link>
+
+            {
+                children.length ? (
+                    <>
+                        <Box
+                            display={isHovered ? 'block' : 'none'}
+                            top={`${HEADER_HEIGHT - 16}px`}
+                            left="0"
+                            position="fixed"
+                            width="100dvw"
+                            bg="white"
+                        >
+                            <Stack
+                                gap="2"
+                                position="relative"
+                                left={`${leftDistance}px`}
+                                py="2"
+                            >
+                                {children.map(child => {
+                                    const { label, slug } = child;
+                                    const isActive = currentTab === slug;
+                                    return (
+                                        <Link
+                                            key={label}
+                                            to={`${href}/${slug}`}
+                                            onClick={() => {
+                                                setHoveredItem('')
+                                            }}
+                                        >
+                                            <Text
+                                                color={isActive ? 'content.tint2' : 'content.primary'}
+                                                _hover={{
+                                                    color: 'content.tint2',
+                                                }}
+                                                whiteSpace="nowrap"
+                                            >
+                                                {label}
+                                            </Text>
+                                        </Link>
+                                    )
+                                })}
+                            </Stack>
+                        </Box>
+                    </>
+                ) : null
+            }
+        </Box>
+    )
+
+};
+
+const Header = () => {
+    const location = useLocation();
+    const { tab: currentTab } = useParams();
+    const [hoveredItem, setHoveredItem] = useState('');
+
+    const segments = location.pathname.split("/");
+    const section = segments[1];
+
+    return (
+        <>
+            <Flex
+                height={`${HEADER_HEIGHT}px`}
+                alignItems="center"
+                px="20"
+                py="4"
+                gap="12"
+                zIndex={99}
+            >
+                <Box>Logo</Box>
+                <Flex ml="auto"
+                    onMouseLeave={() => {
+                        setHoveredItem('')
+                    }}
+                >{
+                        navs.map((nav) => {
+                            const { id, href = '' } = nav
+                            const isActive = `/${section}` === href;
+                            const isHovered = hoveredItem === href;
+
+                            return (
+                                <NavItem
+                                    key={id}
+                                    nav={nav}
+                                    currentTab={currentTab}
+                                    isActive={isActive}
+                                    isHovered={isHovered}
+                                    setHoveredItem={setHoveredItem}
+                                />
+                            );
+                        })
+                    }</Flex>
+            </Flex >
+        </>
+    )
+}
+
+export default Header;
