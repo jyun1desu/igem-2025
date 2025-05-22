@@ -5,7 +5,7 @@ const customConfig = defineConfig({
     tokens: {
       colors: {
         bg: {
-          primary: '#e9f4f0',
+          primary: '#f9f9f9ff',
         },
         content: {
           primary: '#757070',
