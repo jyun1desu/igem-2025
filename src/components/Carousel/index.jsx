@@ -10,7 +10,7 @@ const Carousel = ({
     items = [],
     renderItem,
     hideIndicator = false,
-    autoplayInterval = 3500,
+    autoplayInterval = 3000,
 }) => {
     const containerRef = useRef(null);
     const [visibleCount, setVisibleCount] = useState(1);

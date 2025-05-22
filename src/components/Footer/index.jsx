@@ -57,7 +57,7 @@ const Footer = () => {
                         </Box>
                     </Box>
                 </Flex>
-                <Stack gap="6" flex="0 0 45%" overflow="hidden">
+                <Stack gap="6" flex="1 1 45%" overflow="hidden">
                     <Box>
                         <Text textStyle="sm" color="content.tint1">
                             Our Sponsors:
