@@ -47,6 +47,8 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
                 >
                     {label}
                     <Box
+                        as="span"
+                        display="block"
                         position="absolute"
                         top="calc(100% + 2px)"
                         width={isHovered ? '100%' : 0}
@@ -70,7 +72,7 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
                             bg="white"
                         >
                             <Stack
-                                gap="2"
+                                gap="3"
                                 position="relative"
                                 left={`${leftDistance}px`}
                                 py="2"
@@ -125,6 +127,9 @@ const Header = () => {
                 py="4"
                 gap="12"
                 zIndex={99}
+                bg="white"
+                position="fixed"
+                width="100%"
             >
                 <Box>Logo</Box>
                 <Flex ml="auto"

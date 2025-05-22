@@ -14,6 +14,9 @@ const customConfig = defineConfig({
           tint1: '#44a6bd',
           tint2: '#9ccdd9',
           tint3: '#c5dee4'
+        },
+        border: {
+          primary: '#d0cece',
         }
       },
       space: { 

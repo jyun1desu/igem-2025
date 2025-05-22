@@ -5,7 +5,10 @@ import Carousel from "../Carousel";
 
 const Footer = () => {
     return (
-        <Box mt="auto"
+        <Box
+            as="footer"
+            id="footer"
+            mt="auto"
             px="20"
             py="8"
             bg="#f9f9f9ff"
@@ -34,7 +37,7 @@ const Footer = () => {
                                     CONTACTS.map((contact) => {
                                         const { platform } = contact;
                                         return (
-                                            <Link>
+                                            <Link key={platform}>
                                                 <Flex
                                                     width="40px"
                                                     aspectRatio={1 / 1}
@@ -91,7 +94,7 @@ const Footer = () => {
                             <>
                                 {PREVIOUS_TEAMS.map(team => {
                                     return (
-                                        <Text color="content.secondary" textStyle="2xs">{team}</Text>
+                                        <Text key={team} color="content.secondary" textStyle="2xs">{team}</Text>
                                     )
                                 })}
                             </>
