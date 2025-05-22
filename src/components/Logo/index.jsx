@@ -1,9 +1,14 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react"
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 const Logo = () => {
+    const { pathname } = useLocation();
     return (
-        <Link to="/">
+        <Link to="/" onClick={() => {
+            if (pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }}>
             <Flex
                 alignItems="center"
                 gap="2"
