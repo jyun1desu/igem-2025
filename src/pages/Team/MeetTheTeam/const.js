@@ -135,9 +135,18 @@ export const INSTRUCTORS_N_ASSISTANT = [
         "https://pbs.twimg.com/profile_images/875736582589992960/BQkFHUQ3_400x400.jpg",
     },
     {
-      name: "Simon Yen",
-      role: 'Assistant',
-      image:
-        "https://pbs.twimg.com/profile_images/875736582589992960/BQkFHUQ3_400x400.jpg",
-    },
+        name: "Simon Yen",
+        role: 'Assistant',
+        title: "Teaching Assistant",
+        participatedIn: ["Teaching", "Wet Lab", "Software", "Design"],
+        bio:
+          "Simon will be a 1st year Ph.D. student in Chemistry at the University of Wisconsin-Madison. He assists in experimental design and constructs AI models for 3WJ and split G4 evaluation.",
+        mbti: "ISTJ",
+        funFacts: [
+          "was French",
+          "has lactose intolerance but loves eating carbonara",
+        ],
+        image:
+          "https://pbs.twimg.com/profile_images/875736582589992960/BQkFHUQ3_400x400.jpg",
+      },
   ];

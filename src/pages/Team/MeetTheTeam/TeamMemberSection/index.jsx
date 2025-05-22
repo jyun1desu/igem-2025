@@ -111,7 +111,8 @@ const MemberCard = ({
                                                 color="content.tint2"
                                                 whiteSpace="pre-line"
                                                 position="relative"
-                                                top="4px"
+                                                alignSelf="flex-end"
+                                                bottom="9px"
                                             >{title}</Text>
                                             : null}
                                     </Flex>
@@ -220,7 +221,7 @@ const TeamMembersSection = () => {
             </Box>
             <Grid templateColumns="repeat(1, 1fr)" gap="20">
                 <Box id={SECTION_IDS.STUDENTS}>
-                    <Grid templateColumns="repeat(3, 1fr)" gap="16">
+                    <Grid alignItems="flex-start" templateColumns="repeat(3, 1fr)" gap="16">
                         {STUDENTS.map((member) => {
                             return (
                                 <MemberCard key={'STUDENTS' + member.name} data={member} />
@@ -230,7 +231,7 @@ const TeamMembersSection = () => {
                 </Box>
                 <Box id={SECTION_IDS.ADVISORS}>
                     <SectionTag>Student Advisors</SectionTag>
-                    <Grid templateColumns="repeat(4, 1fr)" gap="10">
+                    <Grid alignItems="flex-start" templateColumns="repeat(4, 1fr)" gap="10">
                         {ADVISORS.map((member) => {
                             return (
                                 <MemberCard key={'ADVISORS' + member.name} data={member} />
@@ -240,7 +241,7 @@ const TeamMembersSection = () => {
                 </Box>
                 <Box id={SECTION_IDS.PRINCIPAL_INVESTIGATORS}>
                     <SectionTag>Principal Investigators</SectionTag>
-                    <Grid templateColumns="repeat(4, 1fr)" gap="10">
+                    <Grid alignItems="flex-start" templateColumns="repeat(4, 1fr)" gap="10">
                         {PRINCIPAL_INVESTIGATORS.map((member) => {
                             return (
                                 <MemberCard key={'PRINCIPAL_INVESTIGATORS' + member.name} data={member} />
@@ -250,7 +251,7 @@ const TeamMembersSection = () => {
                 </Box>
                 <Box id={SECTION_IDS.INSTRUCTORS_N_ASSISTANT}>
                     <SectionTag>Instructors & Assistant</SectionTag>
-                    <Grid templateColumns="repeat(4, 1fr)" gap="10">
+                    <Grid alignItems="flex-start" templateColumns="repeat(4, 1fr)" gap="10">
                         {INSTRUCTORS_N_ASSISTANT.map((member) => {
                             return (
                                 <MemberCard key={'INSTRUCTORS_N_ASSISTANT' + member.name} data={member} />
