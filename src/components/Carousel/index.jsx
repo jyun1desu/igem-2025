@@ -145,7 +145,6 @@ const Carousel = ({
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
         >
-            {/* Wrapper */}
             <Box overflow="hidden" ref={containerRef} px={isSingleMode ? `${gap / 2}px` : "0"}>
                 <Flex
                     transition={isTransitioning ? "transform 0.6s ease" : "none"}
@@ -173,44 +172,65 @@ const Carousel = ({
                     ))}
                 </Flex>
             </Box>
-
-            {/* Arrows */}
             {showLeftArrow && (
-                <IconButton
-                    variant="outline"
-                    bg="white"
-                    borderRadius="full"
-                    borderWidth="2px"
-                    borderColor="content.tint1"
-                    aria-label="Previous"
-                    onClick={prev}
-                    position="absolute"
-                    top="50%"
-                    left="12px"
-                    transform="translateY(-50%)"
-                    zIndex={1}
-                    icon={<span>{"◀︎"}</span>}
-                />
+                <>
+                    <Box
+                        position="absolute"
+                        top="0"
+                        bottom="0"
+                        left="0"
+                        width="60px"
+                        pointerEvents="none"
+                        background="linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0))"
+                        zIndex={0}
+                    />
+                    <IconButton
+                        variant="outline"
+                        bg="white"
+                        borderRadius="full"
+                        borderWidth="2px"
+                        borderColor="content.tint1"
+                        aria-label="Previous"
+                        onClick={prev}
+                        position="absolute"
+                        top="50%"
+                        left="12px"
+                        transform="translateY(-50%)"
+                        zIndex={1}
+                        icon={<span>{"◀︎"}</span>}
+                    />
+                </>
+
             )}
             {showRightArrow && (
-                <IconButton
-                    variant="outline"
-                    borderRadius="full"
-                    borderWidth="2px"
-                    bg="white"
-                    borderColor="content.tint1"
-                    aria-label="Next"
-                    onClick={next}
-                    position="absolute"
-                    top="50%"
-                    right="12px"
-                    transform="translateY(-50%)"
-                    zIndex={1}
-                    icon={<span>{"▶︎"}</span>}
-                />
+                <>
+                    <IconButton
+                        variant="outline"
+                        borderRadius="full"
+                        borderWidth="2px"
+                        bg="white"
+                        borderColor="content.tint1"
+                        aria-label="Next"
+                        onClick={next}
+                        position="absolute"
+                        top="50%"
+                        right="12px"
+                        transform="translateY(-50%)"
+                        zIndex={1}
+                        icon={<span>{"▶︎"}</span>}
+                    />
+                    <Box
+                        position="absolute"
+                        top="0"
+                        bottom="0"
+                        right="0"
+                        width="60px"
+                        pointerEvents="none"
+                        background="linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0))"
+                        zIndex={0}
+                    />
+                </>
             )}
-
-            {/* Indicator */}
             {!hideIndicator && (
                 <Flex gap="2" {...getIndicatorProps()}>
                     {Array.from({ length: pageCount }).map((_, i) => (
