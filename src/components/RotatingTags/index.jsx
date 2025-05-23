@@ -11,7 +11,7 @@ export function RotatingTags({ tags }) {
     useEffect(() => {
         const timer = setInterval(() => {
             setIndex((prev) => (prev + 1) % tags.length);
-        }, 2000);
+        }, 2500);
         return () => clearInterval(timer);
     }, []);
 
