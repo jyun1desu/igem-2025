@@ -24,7 +24,6 @@ const Carousel = ({
 
     const totalLength = items.length;
 
-    // 計算可見項數
     useEffect(() => {
         const calc = () => {
             if (containerRef.current && itemWidth) {
@@ -56,7 +55,6 @@ const Carousel = ({
         return items;
     }, [items, visibleCount, infinite, isSingleMode]);
 
-    // 無縫 loop transition end
     useEffect(() => {
         if (!infinite || isSingleMode) return;
         const el = containerRef.current;
@@ -72,7 +70,6 @@ const Carousel = ({
         return () => el?.removeEventListener("transitionend", handle);
     }, [index, visibleCount, totalLength, infinite, isSingleMode]);
 
-    // 下一張
     const maxIndex = Math.max(totalLength - visibleCount, 0);
     const next = () => {
         setIndex((prev) => {
@@ -82,7 +79,6 @@ const Carousel = ({
         setIsTransitioning(true);
     };
 
-    // 上一張
     const prev = () => {
         setIndex((prev) => {
             if (infinite || isSingleMode) return prev - 1;
@@ -91,13 +87,11 @@ const Carousel = ({
         setIsTransitioning(true);
     };
 
-    // 跳到某頁
     const goToPage = (p) => {
         setIndex(infinite ? visibleCount + p * visibleCount : p * visibleCount);
         setIsTransitioning(true);
     };
 
-    // indicator index
     const currentPage = useMemo(() => {
         if (isSingleMode) return (index + totalLength) % totalLength;
         if (infinite) {

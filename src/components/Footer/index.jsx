@@ -72,7 +72,7 @@ const Footer = () => {
                         </Text>
                         <Box mt="2">
                             <Carousel
-                                items={SPONSORS}
+                                items={[...SPONSORS, ...SPONSORS, ...SPONSORS]}
                                 itemWidth={160}
                                 autoplayInterval={3000}
                                 gap={12}
