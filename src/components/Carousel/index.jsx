@@ -1,60 +1,65 @@
 import { useEffect, useRef, useState, useMemo } from "react";
-import { Box, Flex, Button } from "@chakra-ui/react";
+import { Box, Flex, Button, IconButton } from "@chakra-ui/react";
 
 const GAP = 8;
-const ITEM_WIDTH = 200;
 
 const Carousel = ({
-    gap = GAP,
-    itemWidth = ITEM_WIDTH,
     items = [],
     renderItem,
+    itemWidth,
+    gap = GAP,
+    autoplayInterval,
+    infinite = true,
     hideIndicator = false,
-    autoplayInterval = 3000,
+    hideNavButtons = false,
+    indicatorPosition = 'center',
 }) => {
     const containerRef = useRef(null);
     const [visibleCount, setVisibleCount] = useState(1);
-    const [index, setIndex] = useState(1); // 預設用 1，但會在 useEffect 裡動態調整
+    const [index, setIndex] = useState(infinite ? 1 : 0);
     const [isPaused, setIsPaused] = useState(false);
     const [isTransitioning, setIsTransitioning] = useState(true);
 
+    const isSingleMode = !itemWidth;
+
     useEffect(() => {
         const calc = () => {
-            if (containerRef.current) {
+            if (containerRef.current && itemWidth) {
                 const containerWidth = containerRef.current.offsetWidth;
                 const count = Math.floor(containerWidth / (itemWidth + gap));
                 setVisibleCount(count || 1);
-                setIndex(count);
+                setIndex(infinite ? count : 0);
             }
         };
         calc();
         window.addEventListener("resize", calc);
         return () => window.removeEventListener("resize", calc);
-    }, [itemWidth, gap]);
+    }, [itemWidth, gap, infinite]);
 
     useEffect(() => {
-        if (isPaused) return;
+        if (isPaused || !autoplayInterval) return;
         const timer = setInterval(() => {
-            setIndex((prev) => prev + 1);
-            setIsTransitioning(true);
+            next();
         }, autoplayInterval);
         return () => clearInterval(timer);
-    }, [isPaused, autoplayInterval]);
-
-    const allItems = useMemo(() => {
-        const clonedHead = items.slice(-visibleCount);
-        const clonedTail = items.slice(0, visibleCount);
-        return [...clonedHead, ...items, ...clonedTail];
-    }, [items, visibleCount]);
+    }, [isPaused, autoplayInterval, visibleCount]);
 
     const totalLength = items.length;
-    const pageCount = Math.ceil(totalLength / visibleCount);
-    const currentPage = Math.floor(
-        ((index - visibleCount + totalLength) % totalLength) / visibleCount
-    );
 
+    const allItems = useMemo(() => {
+        if (infinite && !isSingleMode) {
+            const clonedHead = items.slice(-visibleCount);
+            const clonedTail = items.slice(0, visibleCount);
+            return [...clonedHead, ...items, ...clonedTail];
+        }
+        return items;
+    }, [items, visibleCount, infinite, isSingleMode]);
+
+    // handle transition end for infinite loop
     useEffect(() => {
-        const handleTransitionEnd = () => {
+        if (!infinite || isSingleMode) return;
+        const el = containerRef.current;
+        const handle = () => {
             setIsTransitioning(false);
             if (index >= totalLength + visibleCount) {
                 setIndex(visibleCount);
@@ -62,48 +67,146 @@ const Carousel = ({
                 setIndex(totalLength);
             }
         };
+        el?.addEventListener("transitionend", handle);
+        return () => el?.removeEventListener("transitionend", handle);
+    }, [index, visibleCount, totalLength, infinite, isSingleMode]);
 
-        const el = containerRef.current;
-        el?.addEventListener("transitionend", handleTransitionEnd);
-        return () => el?.removeEventListener("transitionend", handleTransitionEnd);
-    }, [index, totalLength, visibleCount]);
-
-    const goToPage = (p) => {
-        setIndex(visibleCount + p * visibleCount);
+    const next = () => {
+        setIndex((prev) => {
+            if (infinite || isSingleMode) return prev + 1;
+            return Math.min(prev + 1, totalLength - visibleCount);
+        });
         setIsTransitioning(true);
     };
 
+    const prev = () => {
+        setIndex((prev) => {
+            if (infinite || isSingleMode) return prev - 1;
+            return Math.max(prev - 1, 0);
+        });
+        setIsTransitioning(true);
+    };
+
+    const goToPage = (p) => {
+        setIndex(infinite ? visibleCount + p * visibleCount : p * visibleCount);
+        setIsTransitioning(true);
+    };
+
+    const currentPage = useMemo(() => {
+        if (isSingleMode) {
+            console.log()
+            return (index + totalLength) % totalLength;
+        }
+        if (infinite) {
+            return Math.floor(((index - visibleCount + totalLength) % totalLength) / visibleCount);
+        }
+        return Math.floor(index / visibleCount);
+    }, [index, visibleCount, totalLength, infinite, isSingleMode]);
+
+    const pageCount = isSingleMode
+        ? totalLength
+        : Math.ceil(totalLength / visibleCount);
+
+    const showLeftArrow = !hideNavButtons && (infinite || index > 0);
+    const showRightArrow = !hideNavButtons && (infinite || index < totalLength - visibleCount);
+
+    const getIndicatorProps = () => {
+        const props = {
+            justify: "center",
+            mt: 3,
+        };
+        switch (indicatorPosition) {
+            case 'right':
+                props.justify = "flex-end";
+                props.mr = 10;
+                break;
+            case 'left':
+                props.justify = "flex-start";
+                props.ml = 10;
+                break;
+            default:
+                break;
+        }
+
+        return props;
+    }
+
     return (
         <Box
-            width="100%"
+            position="relative"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
         >
-            <Box overflow="hidden" ref={containerRef}>
+            <Box
+                overflow="hidden"
+                ref={containerRef}
+                px={isSingleMode ? `${gap / 2}px` : "0"}
+            >
                 <Flex
-                    transition={isTransitioning ? "transform 0.8s ease" : "none"}
-                    transform={`translateX(-${(itemWidth + gap) * index}px)`}
-                    gap={`${gap}px`}
+                    transition={isTransitioning ? "transform 0.6s ease" : "none"}
+                    transform={`translateX(-${(itemWidth ?? containerRef.current?.offsetWidth) * index +
+                        (itemWidth ? gap * index : 0)
+                        }px)`}
+                    gap={isSingleMode ? "0" : `${gap}px`}
+                    style={{
+                        willChange: "transform",
+                        backfaceVisibility: "hidden", 
+                        transformStyle: "preserve-3d", 
+                    }}
                 >
                     {allItems.map((item, i) => (
-                        <Box key={i} width={`${itemWidth}px`} flex="0 0 auto">
+                        <Box
+                            key={i}
+                            flex="0 0 auto"
+                            overflow="hidden"
+                            transform="translateZ(0)"
+                            width={isSingleMode ? "100%" : `${itemWidth}px`}
+                            mr={isSingleMode && i !== allItems.length - 1 ? `${gap}px` : "0"}
+                        >
                             {renderItem(item)}
                         </Box>
                     ))}
                 </Flex>
             </Box>
+
+            {/* Arrows */}
+            {showLeftArrow && (
+                <IconButton
+                    //   icon={}
+                    onClick={prev}
+                    position="absolute"
+                    top="50%"
+                    left="0"
+                    transform="translateY(-50%)"
+                    zIndex={1}
+                    aria-label="Previous"
+                />
+            )}
+            {showRightArrow && (
+                <IconButton
+                    //   icon={}
+                    onClick={next}
+                    position="absolute"
+                    top="50%"
+                    right="0"
+                    transform="translateY(-50%)"
+                    zIndex={1}
+                    aria-label="Next"
+                />
+            )}
+
+            {/* Indicator */}
             {!hideIndicator && (
-                <Flex justify="center" mt="10px" gap="8px">
+                <Flex gap="2" {...getIndicatorProps()}>
                     {Array.from({ length: pageCount }).map((_, i) => (
                         <Button
                             key={i}
-                            size="xs"
                             borderRadius="50%"
-                            bg={i === currentPage ? "black" : "gray.300"}
-                            _hover={{ bg: "gray.500" }}
+                            bg={i === currentPage ? "content.tint1" : "bg.primary"}
+                            _hover={{ bg: "content.tint1" }}
                             onClick={() => goToPage(i)}
-                            w="10px"
-                            h="10px"
+                            w="8px"
+                            h="8px"
                             minW="unset"
                             p="0"
                         />

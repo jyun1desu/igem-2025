@@ -1,6 +1,7 @@
 import { Box, Flex, Stack, Text } from "@chakra-ui/react"
 import FullHeightSectionContainer from "@/components/FullHeightSectionContainer";
 import { RotatingTags } from "../../components/RotatingTags";
+import Carousel from "../../components/Carousel";
 
 const tags = ["fast", "accurate", "easy access", "portable", "cost-friendly"];
 
@@ -53,7 +54,23 @@ const Home = () => {
                 <Text textAlign="center" color="content.secondary" textStyle="lg">
                     Our <HintText>diagnostic tool</HintText> is achieved by:
                 </Text>
-
+                <Box width="800px" mt="6">
+                    <Carousel
+                        items={['1', '2', '3', '4']}
+                        renderItem={(item) => (
+                            <Box
+                                aspectRatio={5 / 3}
+                                bg="bg.primary"
+                                borderRadius="24px"
+                                p="4"
+                                textAlign="center"
+                            >{item}</Box>
+                        )}
+                        infinite={false}
+                        hideNavButtons={true}
+                        indicatorPosition="right"
+                    />
+                </Box>
             </FullHeightSectionContainer>
         </Box>
     )

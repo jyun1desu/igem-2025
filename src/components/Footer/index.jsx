@@ -66,8 +66,10 @@ const Footer = () => {
                             <Carousel
                                 items={SPONSORS}
                                 itemWidth={180}
+                                autoplayInterval={3000}
                                 gap={16}
                                 hideIndicator={true}
+                                hideNavButtons={true}
                                 renderItem={(sponsor) => {
                                     const { id } = sponsor;
                                     return (
