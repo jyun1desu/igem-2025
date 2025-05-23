@@ -20,6 +20,7 @@ const Tag = ({ children, colorVariant = 'tint', ...props }) => {
             display="inline-flex"
             alignItems="center"
             justifyContent="center"
+            whiteSpace="nowrap"
             fontWeight={600}
             mb="6"
             textStyle="lg"
