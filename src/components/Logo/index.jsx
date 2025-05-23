@@ -16,8 +16,8 @@ const Logo = () => {
             >
                 <Image width="42px" src={HeartImage} />
                 <Box>
-                    <Text color="content.secondary" textStyle="2xs">Labi-Kcislk-Taiwan</Text>
-                    <Heading color="content.tint1" textStyle="lg" lineHeight={1.1}>HeartBeaters</Heading>
+                    <Text color="content.secondary" textStyle="xs">Labi-Kcislk-Taiwan</Text>
+                    <Heading color="content.tint1" textStyle="xl" lineHeight={1.1}>HeartBeaters</Heading>
                 </Box>
             </Flex>
         </Link>

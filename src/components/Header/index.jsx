@@ -20,8 +20,7 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
         <Box
             key={label}
             position="relative"
-            px="4"
-            py="2"
+            p="4"
             onMouseEnter={() => {
                 setHoveredItem(href)
             }}
@@ -66,7 +65,7 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
                     <>
                         <Box
                             display={isHovered ? 'block' : 'none'}
-                            top={`${HEADER_HEIGHT - 16}px`}
+                            top={`${HEADER_HEIGHT - 8}px`}
                             left="0"
                             position="fixed"
                             width="100dvw"
@@ -76,7 +75,8 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
                                 gap="3"
                                 position="relative"
                                 left={`${leftDistance}px`}
-                                py="2"
+                                pt="2"
+                                pb="4"
                             >
                                 {children.map(child => {
                                     const { label, slug } = child;

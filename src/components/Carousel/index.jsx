@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useMemo } from "react";
-import { Box, Flex, Button, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Button, IconButton, ButtonGroup } from "@chakra-ui/react";
 
 const GAP = 8;
 
@@ -12,7 +12,7 @@ const Carousel = ({
     infinite = true,
     hideIndicator = false,
     hideNavButtons = false,
-    indicatorPosition = 'center',
+    indicatorPosition = "center",
 }) => {
     const containerRef = useRef(null);
     const [visibleCount, setVisibleCount] = useState(1);
@@ -22,12 +22,15 @@ const Carousel = ({
 
     const isSingleMode = !itemWidth;
 
+    const totalLength = items.length;
+
+    // 計算可見項數
     useEffect(() => {
         const calc = () => {
             if (containerRef.current && itemWidth) {
                 const containerWidth = containerRef.current.offsetWidth;
                 const count = Math.floor(containerWidth / (itemWidth + gap));
-                setVisibleCount(count || 1);
+                setVisibleCount(Math.max(count, 1));
                 setIndex(infinite ? count : 0);
             }
         };
@@ -36,26 +39,24 @@ const Carousel = ({
         return () => window.removeEventListener("resize", calc);
     }, [itemWidth, gap, infinite]);
 
+    // Auto-play
     useEffect(() => {
-        if (isPaused || !autoplayInterval) return;
-        const timer = setInterval(() => {
-            next();
-        }, autoplayInterval);
+        if (isPaused || !autoplayInterval || visibleCount === 0) return;
+        const timer = setInterval(next, autoplayInterval);
         return () => clearInterval(timer);
     }, [isPaused, autoplayInterval, visibleCount]);
 
-    const totalLength = items.length;
-
+    // 處理 infinite 時的 clone
     const allItems = useMemo(() => {
         if (infinite && !isSingleMode) {
-            const clonedHead = items.slice(-visibleCount);
-            const clonedTail = items.slice(0, visibleCount);
-            return [...clonedHead, ...items, ...clonedTail];
+            const head = items.slice(-visibleCount);
+            const tail = items.slice(0, visibleCount);
+            return [...head, ...items, ...tail];
         }
         return items;
     }, [items, visibleCount, infinite, isSingleMode]);
 
-    // handle transition end for infinite loop
+    // 無縫 loop transition end
     useEffect(() => {
         if (!infinite || isSingleMode) return;
         const el = containerRef.current;
@@ -71,14 +72,17 @@ const Carousel = ({
         return () => el?.removeEventListener("transitionend", handle);
     }, [index, visibleCount, totalLength, infinite, isSingleMode]);
 
+    // 下一張
+    const maxIndex = Math.max(totalLength - visibleCount, 0);
     const next = () => {
         setIndex((prev) => {
             if (infinite || isSingleMode) return prev + 1;
-            return Math.min(prev + 1, totalLength - visibleCount);
+            return Math.min(prev + 1, maxIndex);
         });
         setIsTransitioning(true);
     };
 
+    // 上一張
     const prev = () => {
         setIndex((prev) => {
             if (infinite || isSingleMode) return prev - 1;
@@ -87,49 +91,53 @@ const Carousel = ({
         setIsTransitioning(true);
     };
 
+    // 跳到某頁
     const goToPage = (p) => {
         setIndex(infinite ? visibleCount + p * visibleCount : p * visibleCount);
         setIsTransitioning(true);
     };
 
+    // indicator index
     const currentPage = useMemo(() => {
-        if (isSingleMode) {
-            console.log()
-            return (index + totalLength) % totalLength;
-        }
+        if (isSingleMode) return (index + totalLength) % totalLength;
         if (infinite) {
             return Math.floor(((index - visibleCount + totalLength) % totalLength) / visibleCount);
         }
         return Math.floor(index / visibleCount);
     }, [index, visibleCount, totalLength, infinite, isSingleMode]);
 
-    const pageCount = isSingleMode
-        ? totalLength
-        : Math.ceil(totalLength / visibleCount);
+    const pageCount = isSingleMode ? totalLength : Math.ceil(totalLength / visibleCount);
 
     const showLeftArrow = !hideNavButtons && (infinite || index > 0);
-    const showRightArrow = !hideNavButtons && (infinite || index < totalLength - visibleCount);
+    const showRightArrow = !hideNavButtons && (infinite || index < maxIndex);
 
     const getIndicatorProps = () => {
-        const props = {
-            justify: "center",
-            mt: 3,
-        };
+        const props = { justify: "center", mt: 3 };
         switch (indicatorPosition) {
             case 'right':
                 props.justify = "flex-end";
-                props.mr = 10;
+                props.mr = 8;
                 break;
             case 'left':
                 props.justify = "flex-start";
-                props.ml = 10;
+                props.ml = 8;
                 break;
             default:
-                break;
-        }
 
+        }
         return props;
-    }
+    };
+
+    const containerWidth = containerRef.current?.offsetWidth || 0;
+    const actualItemWidth = itemWidth ?? containerRef.current?.querySelector('[data-carousel-item]')?.offsetWidth ?? containerWidth;
+    const totalItems = items.length;
+    const totalWidth = totalItems * actualItemWidth + (totalItems - 1) * gap;
+    const rawTranslateX = index * (actualItemWidth + gap);
+    const maxTranslateX = Math.max(totalWidth - containerWidth, 0);
+
+    const translateX = infinite
+        ? rawTranslateX
+        : Math.min(rawTranslateX, maxTranslateX);
 
     return (
         <Box
@@ -137,21 +145,18 @@ const Carousel = ({
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
         >
-            <Box
-                overflow="hidden"
-                ref={containerRef}
-                px={isSingleMode ? `${gap / 2}px` : "0"}
-            >
+            {/* Wrapper */}
+            <Box overflow="hidden" ref={containerRef} px={isSingleMode ? `${gap / 2}px` : "0"}>
                 <Flex
                     transition={isTransitioning ? "transform 0.6s ease" : "none"}
-                    transform={`translateX(-${(itemWidth ?? containerRef.current?.offsetWidth) * index +
-                        (itemWidth ? gap * index : 0)
-                        }px)`}
+                    transform={`translateX(-${translateX}px)`}
                     gap={isSingleMode ? "0" : `${gap}px`}
                     style={{
                         willChange: "transform",
-                        backfaceVisibility: "hidden", 
-                        transformStyle: "preserve-3d", 
+                        backfaceVisibility: "hidden",
+                        transformStyle: "preserve-3d",
+                        overflow: "visible",
+                        perspective: "1000px",
                     }}
                 >
                     {allItems.map((item, i) => (
@@ -172,26 +177,36 @@ const Carousel = ({
             {/* Arrows */}
             {showLeftArrow && (
                 <IconButton
-                    //   icon={}
+                    variant="outline"
+                    bg="white"
+                    borderRadius="full"
+                    borderWidth="2px"
+                    borderColor="content.tint1"
+                    aria-label="Previous"
                     onClick={prev}
                     position="absolute"
                     top="50%"
-                    left="0"
+                    left="12px"
                     transform="translateY(-50%)"
                     zIndex={1}
-                    aria-label="Previous"
+                    icon={<span>{"◀︎"}</span>}
                 />
             )}
             {showRightArrow && (
                 <IconButton
-                    //   icon={}
+                    variant="outline"
+                    borderRadius="full"
+                    borderWidth="2px"
+                    bg="white"
+                    borderColor="content.tint1"
+                    aria-label="Next"
                     onClick={next}
                     position="absolute"
                     top="50%"
-                    right="0"
+                    right="12px"
                     transform="translateY(-50%)"
                     zIndex={1}
-                    aria-label="Next"
+                    icon={<span>{"▶︎"}</span>}
                 />
             )}
 

@@ -32,7 +32,7 @@ const Footer = () => {
                                 textStyle="5xl"
                                 color="content.tint1"
                             >HeartBeaters</Text>
-                            <Text color="content.secondary" textStyle="2xs">
+                            <Text color="content.secondary" textStyle="xs">
                                 A nucleic acid-based biosensor for early diagnostic of <Text as="span" color="content.red">CVDs</Text>
                             </Text>
                         </Box>
