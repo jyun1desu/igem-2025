@@ -1,6 +1,7 @@
 import { Box, Flex, Grid, Image, List, ListItem, Text, Dialog, Portal, Button, CloseButton } from "@chakra-ui/react"
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { ADVISORS, INSTRUCTORS_N_ASSISTANT, PRINCIPAL_INVESTIGATORS, STUDENTS } from "../const";
+import Tag from "@/components/Tag";
 
 const SECTION_IDS = {
     STUDENTS: 'STUDENTS',
@@ -36,25 +37,6 @@ const SectionLink = ({ children, isActive, to }) => {
                     });
                 }
             }}
-        >{children}</Text>
-    )
-}
-
-const SectionTag = ({ children, ...props }) => {
-    return (
-        <Text
-            bg="bg.secondary"
-            borderRadius="full"
-            px="3"
-            py="1"
-            display="inline-flex"
-            alignItems="center"
-            justifyContent="center"
-            fontWeight={600}
-            color="content.tint1"
-            mb="6"
-            textStyle="lg"
-            {...props}
         >{children}</Text>
     )
 }
@@ -123,7 +105,7 @@ const MemberCard = ({
                                                 {participatedIn.map((p) => {
                                                     return (
                                                         <ListItem m="0">
-                                                            <SectionTag px="2" py="1" m="0" textStyle="sm">{p}</SectionTag>
+                                                            <Tag px="2" py="1" m="0" textStyle="sm">{p}</Tag>
                                                         </ListItem>
                                                     )
                                                 })}
@@ -136,7 +118,7 @@ const MemberCard = ({
                                     {mbti
                                         ? <Flex textStyle="md" mt="6" alignItems="center" gap="1">
                                             <Text>MBTI:</Text>
-                                            <SectionTag bg="#7f7f7f26" color="#595959" px="2" py="1" m="0" textStyle="sm">{mbti}</SectionTag>
+                                            <Tag bg="#7f7f7f26" color="#595959" px="2" py="1" m="0" textStyle="sm">{mbti}</Tag>
                                         </Flex>
                                         : null}
                                     {funFacts.length
@@ -230,7 +212,7 @@ const TeamMembersSection = () => {
                     </Grid>
                 </Box>
                 <Box id={SECTION_IDS.ADVISORS}>
-                    <SectionTag>Student Advisors</SectionTag>
+                    <Tag>Student Advisors</Tag>
                     <Grid alignItems="flex-start" templateColumns="repeat(4, 1fr)" gap="10">
                         {ADVISORS.map((member) => {
                             return (
@@ -240,7 +222,7 @@ const TeamMembersSection = () => {
                     </Grid>
                 </Box>
                 <Box id={SECTION_IDS.PRINCIPAL_INVESTIGATORS}>
-                    <SectionTag>Principal Investigators</SectionTag>
+                    <Tag>Principal Investigators</Tag>
                     <Grid alignItems="flex-start" templateColumns="repeat(4, 1fr)" gap="10">
                         {PRINCIPAL_INVESTIGATORS.map((member) => {
                             return (
@@ -250,7 +232,7 @@ const TeamMembersSection = () => {
                     </Grid>
                 </Box>
                 <Box id={SECTION_IDS.INSTRUCTORS_N_ASSISTANT}>
-                    <SectionTag>Instructors & Assistant</SectionTag>
+                    <Tag>Instructors & Assistant</Tag>
                     <Grid alignItems="flex-start" templateColumns="repeat(4, 1fr)" gap="10">
                         {INSTRUCTORS_N_ASSISTANT.map((member) => {
                             return (
