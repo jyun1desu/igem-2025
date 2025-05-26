@@ -44,7 +44,7 @@ const Footer = () => {
                         <Flex gap="2" mt="1">
                             {
                                 CONTACTS.map((contact) => {
-                                    const { platform } = contact;
+                                    const { platform, image } = contact;
                                     return (
                                         <Link key={platform}>
                                             <Flex
@@ -52,11 +52,14 @@ const Footer = () => {
                                                 aspectRatio={1 / 1}
                                                 borderRadius="8px"
                                                 bg="white"
-                                                p="2"
+                                                p={ platform === 'igem' ? 1 : 2}
                                                 alignItems="center"
                                                 justifyContent="center"
                                             >
-                                                {platform[0]}
+                                                { platform === 'Labi' 
+                                                ? <Text color="content.tint1" fontWeight={600} textStyle="sm">LABI</Text>
+                                                : <Image src={image} />
+                                                }
                                             </Flex>
                                         </Link>
                                     )
