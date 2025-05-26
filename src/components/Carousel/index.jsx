@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from "react";
-import { Box, Flex, Button, IconButton, ButtonGroup } from "@chakra-ui/react";
+import { Box, Flex, Button, IconButton, ButtonGroup, Image } from "@chakra-ui/react";
+import LeftArrowIcon from '@/assets/icons/chevron-left.svg';
+import RightArrowIcon from '@/assets/icons/chevron-right.svg';
 
 const GAP = 8;
 
@@ -178,7 +180,7 @@ const Carousel = ({
                         background="linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0))"
                         zIndex={0}
                     />
-                    <IconButton
+                    <Button
                         variant="outline"
                         bg="white"
                         borderRadius="full"
@@ -191,14 +193,16 @@ const Carousel = ({
                         left="12px"
                         transform="translateY(-50%)"
                         zIndex={1}
-                        icon={<span>{"◀︎"}</span>}
-                    />
+                        p="0"
+                    >
+                        <Image src={LeftArrowIcon} />
+                    </Button>
                 </>
 
             )}
             {showRightArrow && (
                 <>
-                    <IconButton
+                    <Button
                         variant="outline"
                         borderRadius="full"
                         borderWidth="2px"
@@ -211,8 +215,10 @@ const Carousel = ({
                         right="12px"
                         transform="translateY(-50%)"
                         zIndex={1}
-                        icon={<span>{"▶︎"}</span>}
-                    />
+                        p="0"
+                    >
+                         <Image src={RightArrowIcon} />
+                    </Button>
                     <Box
                         position="absolute"
                         top="0"
