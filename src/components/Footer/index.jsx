@@ -1,6 +1,7 @@
 import { Box, Flex, Grid, GridItem, Image, Stack, Text } from "@chakra-ui/react"
 import { Link } from "react-router";
 import HeartImage from '@/assets/main_heart.png';
+import LabiLogo from '@/assets/labi-logo.png';
 import { COPY_RIGHT, CONTACTS, PREVIOUS_TEAMS, SPONSORS } from "./const";
 import Carousel from "../Carousel";
 
@@ -113,8 +114,10 @@ const Footer = () => {
                             />
                         </Box>
                     </Box>
-                    <Flex alignItems="flex-end" mt="auto">
-                        <Box flex="1 1 50%">益閣 LOGO</Box>
+                    <Flex alignItems="flex-end" mt="auto" gap="3">
+                        <Box flex="0 0 240px">
+                            <Image width="100%" src={LabiLogo} />
+                        </Box>
                         <Stack flex="1 1 50%" gap="1">
                             <Text color="content.secondary" textStyle="2xs" fontWeight={600}>Our previos teams</Text>
                             <>
