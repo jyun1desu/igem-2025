@@ -68,6 +68,7 @@ const Home = () => {
                                 textAlign="center"
                             >{item}</Box>
                         )}
+                        autoplayInterval={3000}
                         infinite={false}
                         hideNavButtons={true}
                         indicatorPosition="right"
