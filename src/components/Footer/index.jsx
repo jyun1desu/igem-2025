@@ -19,7 +19,7 @@ const Footer = () => {
                 <Grid templateColumns="auto 1fr" flex="0 0 50%" columnGap="2">
                     <GridItem display="flex" colStart={1} rowStart={1}>
                         <Image
-                            width="100px"
+                            width="120px"
                             src={HeartImage}
                             objectFit="contain"
                             my="auto"
@@ -30,16 +30,16 @@ const Footer = () => {
                             <Text
                                 letterSpacing="2px"
                                 fontWeight={600}
-                                textStyle="5xl"
+                                textStyle="6xl"
                                 color="content.tint1"
                             >HeartBeaters</Text>
-                            <Text color="content.secondary" textStyle="xs">
+                            <Text color="content.secondary" textStyle="sm">
                                 A nucleic acid-based biosensor for early diagnostic of <Text as="span" color="content.red">CVDs</Text>
                             </Text>
                         </Box>
                     </GridItem>
                     <GridItem colStart={2} rowStart={2}>
-                        <Text textStyle="sm" color="content.tint1">
+                        <Text textStyle="md" color="content.tint1">
                             Contact Us
                         </Text>
                         <Flex gap="2" mt="1">
@@ -71,7 +71,7 @@ const Footer = () => {
                 </Grid>
                 <Stack gap="6" flex="1 1 45%" overflow="hidden">
                     <Box>
-                        <Text textStyle="sm" color="content.tint1">
+                        <Text textStyle="md" color="content.tint1">
                             Our Sponsors:
                         </Text>
                         <Box mt="2">
@@ -114,12 +114,12 @@ const Footer = () => {
                             />
                         </Box>
                     </Box>
-                    <Flex alignItems="flex-end" mt="auto" gap="3">
+                    <Flex alignItems="flex-end" mt="2" gap="3">
                         <Box flex="0 0 240px">
                             <Image width="100%" src={LabiLogo} />
                         </Box>
                         <Stack flex="1 1 50%" gap="1">
-                            <Text color="content.secondary" textStyle="2xs" fontWeight={600}>Our previos teams</Text>
+                            <Text color="content.secondary" textStyle="xs" fontWeight={600}>Our previos teams</Text>
                             <>
                                 {PREVIOUS_TEAMS.map(team => {
                                     return (

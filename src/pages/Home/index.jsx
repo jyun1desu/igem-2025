@@ -47,6 +47,7 @@ const Home = () => {
     const { ref: section2Ref, inView: section2InView } = useInView({ triggerOnce: true, threshold: 0.3 });
     const { ref: section3Ref, inView: section3InView } = useInView({ triggerOnce: true, threshold: 0.3 });
     const { ref: section4Ref, inView: section4InView } = useInView({ triggerOnce: true, threshold: 0.3 });
+    const { ref: section5Ref, inView: section5InView } = useInView({ triggerOnce: true, threshold: 0.3 });
 
     return (
         <Box>
@@ -133,16 +134,23 @@ const Home = () => {
             </FullHeightSectionContainer>
             <FullHeightSectionContainer flexDirection="column" justifyContent="flex-start" alignItems="center">
                 <Text textAlign="center" color="content.secondary" textStyle="xl">that is why we introduce</Text>
-                <SlideContainer gap="6" mx="auto" mt="12%" mb="auto">
-                    <NormalHeart />
-                    <Box>
-                        <HeartBeatersText />
-                        <Text color="content.secondary" textStyle="xl" mt="2">
-                            <Text as="span" mr="1">A nucleic acid-based biosensor for early diagnostic of <Text as="span" color="content.red">CVDs</Text> that is</Text>
-                            <RotatingTags tags={tags} />
-                        </Text>
-                    </Box>
-                </SlideContainer>
+                <MotionBox
+                    ref={section5Ref}
+                    variants={fadeInUp}
+                    initial="hidden"
+                    animate={section5InView ? "visible" : "hidden"}
+                >
+                    <SlideContainer gap="6" mx="auto" mt="12%" mb="auto">
+                        <NormalHeart />
+                        <Box>
+                            <HeartBeatersText />
+                            <Text color="content.secondary" textStyle="xl" mt="2">
+                                <Text as="span" mr="1">A nucleic acid-based biosensor for early diagnostic of <Text as="span" color="content.red">CVDs</Text> that is</Text>
+                                <RotatingTags tags={tags} />
+                            </Text>
+                        </Box>
+                    </SlideContainer>
+                </MotionBox>
             </FullHeightSectionContainer>
             <FullHeightSectionContainer flexDirection="column" justifyContent="flex-start" alignItems="center">
                 <Text textAlign="center" color="content.secondary" textStyle="xl">
@@ -161,7 +169,6 @@ const Home = () => {
                                 textAlign="center"
                             >{item}</Box>
                         )}
-                        autoplayInterval={3000}
                         infinite={false}
                         hideNavButtons={true}
                         indicatorPosition="right"
