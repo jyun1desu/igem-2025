@@ -6,6 +6,7 @@ import { RotatingTags } from "../../components/RotatingTags";
 import Carousel from "../../components/Carousel";
 import { EXPLORE_MORE_LINKS } from "./const";
 import RedHeartWithTearDrop, { NormalHeart } from "../../components/Heart";
+import Approaches from "./Approaches";
 
 const tags = ["fast", "accurate", "easy access", "portable", "cost-friendly"];
 
@@ -156,24 +157,7 @@ const Home = () => {
                 <Text textAlign="center" color="content.secondary" textStyle="xl">
                     Our <HintText>diagnostic tool</HintText> is achieved by:
                 </Text>
-                <Box width="800px" mt="6">
-                    <Carousel
-                        items={['1', '2', '3', '4']}
-                        gap={0}
-                        renderItem={(item) => (
-                            <Box
-                                aspectRatio={5 / 3}
-                                bg="bg.primary"
-                                borderRadius="24px"
-                                p="4"
-                                textAlign="center"
-                            >{item}</Box>
-                        )}
-                        infinite={false}
-                        hideNavButtons={true}
-                        indicatorPosition="right"
-                    />
-                </Box>
+                <Approaches width="750px" mt="6" />
             </FullHeightSectionContainer>
             <FullHeightSectionContainer flexDirection="column" minHeight="unset" pb="24">
                 <Text textAlign="center" color="content.secondary" textStyle="xl">
