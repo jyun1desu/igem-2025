@@ -15,6 +15,7 @@ const Carousel = ({
     hideIndicator = false,
     hideNavButtons = false,
     indicatorPosition = "center",
+    containerProps = {}
 }) => {
     const containerRef = useRef(null);
     const [visibleCount, setVisibleCount] = useState(1);
@@ -141,7 +142,12 @@ const Carousel = ({
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
         >
-            <Box overflow="hidden" ref={containerRef} px={isSingleMode ? `${gap / 2}px` : "0"}>
+            <Box
+                overflow="hidden"
+                ref={containerRef}
+                px={isSingleMode ? `${gap / 2}px` : "0"}
+                {...containerProps}
+            >
                 <Flex
                     transition={isTransitioning ? "transform 0.6s ease" : "none"}
                     transform={`translateX(-${translateX}px)`}
@@ -217,7 +223,7 @@ const Carousel = ({
                         zIndex={1}
                         p="0"
                     >
-                         <Image src={RightArrowIcon} />
+                        <Image src={RightArrowIcon} />
                     </Button>
                     <Box
                         position="absolute"

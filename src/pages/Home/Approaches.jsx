@@ -370,7 +370,7 @@ const ElectrochemicalReaders = () => {
                 <Box>
                     <Image width="220px" src={SensorS} bg="#f1f1f1" />
                 </Box>
-                <Box position="relative" top="-56px" left="120px">
+                <Box position="relative" top="-56px" left="110px">
                     <Image width="310px" src={SensorL} />
                 </Box>
             </MotionBox>
@@ -394,7 +394,7 @@ const ElectrochemicalReaders = () => {
                     </Text>
                     <Pointer rotate="-45" width={12} left="-22px" top="28px" />
                 </Box>
-                <Box position="absolute" top="242px" left="-144px" textAlign="right">
+                <Box position="absolute" top="242px" left="-154px" textAlign="right">
                     <Text color="content.tint1" textStyle="sm">Full Size Model</Text>
                     <Text
                         width="280px"
@@ -416,9 +416,9 @@ const ElectrochemicalReaders = () => {
             >
                 <Text position="absolute" top="5px" left="10px" textStyle="2xs" color="content.secondary">5.7cm</Text>
                 <Text position="absolute" top="96px" left="68px" textStyle="2xs" color="content.secondary">6.1cm</Text>
-                <Text position="absolute" top="192px" left="142px" textStyle="2xs" color="content.secondary">19.3cm</Text>
-                <Text position="absolute" top="106px" left="330px" textStyle="2xs" color="content.secondary">11.2cm</Text>
-                <Text position="absolute" top="172px" left="408px" textStyle="2xs" color="content.secondary">4.3cm</Text>
+                <Text position="absolute" top="192px" left="132px" textStyle="2xs" color="content.secondary">19.3cm</Text>
+                <Text position="absolute" top="106px" left="320px" textStyle="2xs" color="content.secondary">11.2cm</Text>
+                <Text position="absolute" top="172px" left="398px" textStyle="2xs" color="content.secondary">4.3cm</Text>
                 <Pointer
                     position="absolute" top="14px" left="6px"
                     withEnd={true}
@@ -436,7 +436,7 @@ const ElectrochemicalReaders = () => {
                     rotate={28}
                 />
                 <Pointer
-                    position="absolute" top="162px" left="142px"
+                    position="absolute" top="162px" left="132px"
                     withEnd={true}
                     width={160}
                     endWidth={3}
@@ -444,7 +444,7 @@ const ElectrochemicalReaders = () => {
                     rotate={-45}
                 />
                 <Pointer
-                    position="absolute" top="128px" left="288px"
+                    position="absolute" top="128px" left="278px"
                     withEnd={true}
                     width={116}
                     endWidth={3}
@@ -452,7 +452,7 @@ const ElectrochemicalReaders = () => {
                     rotate={27}
                 />
                 <Pointer
-                    position="absolute" top="178px" left="386px"
+                    position="absolute" top="178px" left="376px"
                     withEnd={true}
                     width={26}
                     endWidth={3}
@@ -465,13 +465,13 @@ const ElectrochemicalReaders = () => {
 }
 const PageFour = () => {
     return (
-        <Flex width="100%" gap="8">
+        <Flex width="100%" gap="4">
             <Stack>
                 <Box mt="auto" mb="24px" flex="0 0 auto" textAlign="left" textStyle="4xl">
-                    <Text color="content.secondary">
+                    <Text letterSpacing="0.5px" color="content.secondary">
                         Utilizing Portable
                     </Text>
-                    <Text color="content.tint1" fontWeight={600} whiteSpace="pre-line">
+                    <Text letterSpacing="0.5px" color="content.tint1" fontWeight={600} whiteSpace="pre-line">
                         {`Electrochemical\nReaders`}
                     </Text>
                 </Box>
@@ -503,10 +503,8 @@ const Approaches = ({ ...props }) => {
                         <Box
                             display="flex"
                             whiteSpace="nowrap"
-                            witdth="750px"
+                            witdth="760px"
                             height="380px"
-                            bg="bg.primary"
-                            borderRadius="24px"
                             p="6"
                             pt="8"
                             textAlign="center"
@@ -514,6 +512,10 @@ const Approaches = ({ ...props }) => {
                             <Item />
                         </Box>
                     )
+                }}
+                containerProps={{
+                    bg: "bg.primary",
+                    borderRadius: "24px",
                 }}
                 infinite={false}
                 hideNavButtons={true}
