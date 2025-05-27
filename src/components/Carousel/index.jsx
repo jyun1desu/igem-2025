@@ -15,7 +15,8 @@ const Carousel = ({
     hideIndicator = false,
     hideNavButtons = false,
     indicatorPosition = "center",
-    containerProps = {}
+    containerProps = {},
+    getIndicatorStyleProps = () => {},
 }) => {
     const containerRef = useRef(null);
     const [visibleCount, setVisibleCount] = useState(1);
@@ -250,6 +251,7 @@ const Carousel = ({
                             h="8px"
                             minW="unset"
                             p="0"
+                            {...getIndicatorStyleProps(i, currentPage)}
                         />
                     ))}
                 </Flex>

@@ -517,6 +517,13 @@ const Approaches = ({ ...props }) => {
                     bg: "bg.primary",
                     borderRadius: "24px",
                 }}
+                getIndicatorStyleProps={(index, currentPage) => {
+                    const bg = index === currentPage
+                        ? index === 0 ? "content.red" : "content.tint1"
+                        : "bg.primary"
+                    const _hover = { bg: index === 0 ? "content.red" : "content.tint1" }
+                    return { bg, _hover }
+                }}
                 infinite={false}
                 hideNavButtons={true}
                 indicatorPosition="right"
