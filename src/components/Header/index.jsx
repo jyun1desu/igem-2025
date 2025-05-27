@@ -121,6 +121,7 @@ const Header = () => {
     return (
         <>
             <Flex
+                minWidth="1100px"
                 height={`${HEADER_HEIGHT}px`}
                 alignItems="center"
                 px="20"
