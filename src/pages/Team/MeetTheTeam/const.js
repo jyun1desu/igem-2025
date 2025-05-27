@@ -1,3 +1,8 @@
+import HeidiImg from '@/assets/team-members/team_heidi.png';
+import SimonImg from '@/assets/team-members/team_simon.png';
+import GauImg from '@/assets/team-members/team_gau.png';
+
+
 export const STUDENTS = [
   {
     name: "Amber",
@@ -107,8 +112,7 @@ export const PRINCIPAL_INVESTIGATORS = [
       "is afraid of height but teaches aerial loop and yoga",
       "is afraid of water but loves freediving and scuba diving",
     ],
-    image:
-      "https://pbs.twimg.com/profile_images/875736582589992960/BQkFHUQ3_400x400.jpg",
+    image: HeidiImg,
   },
 ];
 
@@ -125,14 +129,12 @@ export const INSTRUCTORS_N_ASSISTANT = [
         "is afraid of height but teaches aerial loop and yoga",
         "is afraid of water but loves freediving and scuba diving",
       ],
-      image:
-        "https://pbs.twimg.com/profile_images/875736582589992960/BQkFHUQ3_400x400.jpg",
+      image: HeidiImg,
     },
     {
       name: "Shiang-Shin Gau",
       role: 'Wet Lab Instructor',
-      image:
-        "https://pbs.twimg.com/profile_images/875736582589992960/BQkFHUQ3_400x400.jpg",
+      image: GauImg,
     },
     {
         name: "Simon Yen",
@@ -146,7 +148,6 @@ export const INSTRUCTORS_N_ASSISTANT = [
           "was French",
           "has lactose intolerance but loves eating carbonara",
         ],
-        image:
-          "https://pbs.twimg.com/profile_images/875736582589992960/BQkFHUQ3_400x400.jpg",
+        image: SimonImg,
       },
   ];

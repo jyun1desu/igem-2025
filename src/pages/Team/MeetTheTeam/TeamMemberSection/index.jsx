@@ -57,7 +57,13 @@ const MemberCard = ({
                         src={image}
                         borderRadius="100%"
                     />
-                    <Text textAlign="center" color="content.tint1" mt="2" textStyle="lg">{name}</Text>
+                    <Text
+                        textAlign="center"
+                        color="content.tint1"
+                        mt="2"
+                        textStyle="lg"
+                        whiteSpace="nowrap"
+                    >{name}</Text>
                     {previousTeam ? <Text whiteSpace="pre-line" textAlign="center" color="content.tint1" textStyle="xs">{previousTeam}</Text> : null}
                     {role ? <Text whiteSpace="pre-line" textAlign="center" color="content.tint1" textStyle="xs">{role}</Text> : null}
                 </Box>
@@ -83,6 +89,7 @@ const MemberCard = ({
                                             textStyle="5xl"
                                             fontWeight={600}
                                             color="content.tint1"
+                                            whiteSpace="nowrap"
                                         >
                                             {name}
                                         </Text>
