@@ -1,4 +1,6 @@
-import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react"
+import { Box, Flex, Text } from "@chakra-ui/react"
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import FullHeightSectionContainer from "@/components/FullHeightSectionContainer";
 import { RotatingTags } from "../../components/RotatingTags";
 import Carousel from "../../components/Carousel";
@@ -6,6 +8,14 @@ import { EXPLORE_MORE_LINKS } from "./const";
 import RedHeartWithTearDrop, { NormalHeart } from "../../components/Heart";
 
 const tags = ["fast", "accurate", "easy access", "portable", "cost-friendly"];
+
+export const MotionBox = motion(Box);
+export const MotionText = motion(Text);
+
+const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+};
 
 const HintText = ({ children, color }) => {
     return (
@@ -33,6 +43,11 @@ const SlideContainer = ({ children, ...props }) => {
 }
 
 const Home = () => {
+    const { ref: section1Ref, inView: section1InView } = useInView({ triggerOnce: true, threshold: 0.3 });
+    const { ref: section2Ref, inView: section2InView } = useInView({ triggerOnce: true, threshold: 0.3 });
+    const { ref: section3Ref, inView: section3InView } = useInView({ triggerOnce: true, threshold: 0.3 });
+    const { ref: section4Ref, inView: section4InView } = useInView({ triggerOnce: true, threshold: 0.3 });
+
     return (
         <Box>
             <FullHeightSectionContainer>
@@ -49,51 +64,71 @@ const Home = () => {
             <FullHeightSectionContainer>
                 <SlideContainer>
                     <RedHeartWithTearDrop withAnimation={true} hideRightDrop={true} />
-                    <Box>
+                    <MotionBox
+                        ref={section1Ref}
+                        variants={fadeInUp}
+                        initial="hidden"
+                        animate={section1InView ? "visible" : "hidden"}
+                    >
                         <Text color="content.primary" textStyle="xl">Did you know that…</Text>
                         <Text color="content.primary" textStyle="2xl">
                             <HintText color="red">1/3</HintText> of the mortality cases are from <HintText color="red">heart diseases </HintText>
                         </Text>
-                    </Box>
+                    </MotionBox>
                 </SlideContainer>
             </FullHeightSectionContainer>
             <FullHeightSectionContainer>
                 <SlideContainer>
                     <RedHeartWithTearDrop withAnimation={true} disableLeftDropAnimation={true} />
-                    <Box>
+                    <MotionBox
+                        ref={section2Ref}
+                        variants={fadeInUp}
+                        initial="hidden"
+                        animate={section2InView ? "visible" : "hidden"}
+                    >
                         <Text color="content.primary" textStyle="xl">
                             and specifically for <HintText color="red">cardiovascular diseases (CVDs)</HintText>,
                         </Text>
                         <Text color="content.primary" textStyle="2xl">
                             CVDs result in approximately <HintText color="red">18 million</HintText> deaths each year
                         </Text>
-                    </Box>
+                    </MotionBox>
                 </SlideContainer>
             </FullHeightSectionContainer>
             <FullHeightSectionContainer>
                 <SlideContainer>
                     <RedHeartWithTearDrop withAnimation={false} />
-                    <Box>
+                    <MotionBox
+                        ref={section3Ref}
+                        variants={fadeInUp}
+                        initial="hidden"
+                        animate={section3InView ? "visible" : "hidden"}
+                    >
                         <Text color="content.primary" textStyle="xl">
                             as you are reading this …
                         </Text>
                         <Text color="content.primary" textStyle="2xl">
                             one person has already passed away due to <HintText color="red">CVDs</HintText>
                         </Text>
-                    </Box>
+                    </MotionBox>
                 </SlideContainer>
             </FullHeightSectionContainer>
-                        <FullHeightSectionContainer>
+            <FullHeightSectionContainer>
                 <SlideContainer>
                     <RedHeartWithTearDrop withAnimation={false} />
-                    <Box>
+                    <MotionBox
+                        ref={section4Ref}
+                        variants={fadeInUp}
+                        initial="hidden"
+                        animate={section4InView ? "visible" : "hidden"}
+                    >
                         <Text color="content.primary" textStyle="xl">
                             Current clinical methods may accurately identify <HintText color="red" fontWeight={400}>CVDs</HintText>, but …
                         </Text>
                         <Text color="content.primary" textStyle="2xl">
                             people often suffer from <b>late diagnosis</b> or <b>insufficient resources</b>
                         </Text>
-                    </Box>
+                    </MotionBox>
                 </SlideContainer>
             </FullHeightSectionContainer>
             <FullHeightSectionContainer flexDirection="column" justifyContent="flex-start" alignItems="center">
