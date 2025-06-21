@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 
 const FullHeightSectionContainer = ({ children, bg, ...props }) => {
     return (

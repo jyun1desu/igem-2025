@@ -1,18 +1,13 @@
 import { Link, useLocation } from "react-router";
 import { Box, Flex, Stack, Text } from "@chakra-ui/react"
-import { NAVS, navConfig } from "@/configs/navigation";
 import { useRef, useState } from "react";
 import Logo from "../Logo";
+import pages from "../../pages";
 
 const HEADER_HEIGHT = 70;
-const navsOrder = [NAVS.HOME, NAVS.TEAM, NAVS.PROJECT, NAVS.WET_LAB, NAVS.DRY_LAB, NAVS.OUR_MODEL, NAVS.HUMAN_PRACTICE];
 
-const navs = navsOrder.map(navKey => {
-    return navConfig[navKey]
-});
-
-const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
-    const { label, children = [], href } = nav;
+const NavItem = ({ nav, isActive, isHovered, currentPath, setHoveredItem }) => {
+    const { name, folder = [], path, label } = nav;
     const navButtonRef = useRef();
 
     const leftDistance = navButtonRef.current?.getBoundingClientRect()?.left || 0;
@@ -22,16 +17,16 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
             position="relative"
             p="4"
             onMouseEnter={() => {
-                setHoveredItem(href)
+                setHoveredItem(name)
             }}
             onMouseLeave={() => {
                 setHoveredItem('')
             }}
         >
             <Link ref={navButtonRef}
-                to={!children.length
-                    ? href
-                    : `${href}/${children[0].slug}`
+                to={path
+                    ? path
+                    : folder[0].path
                 }
                 onClick={() => {
                     setHoveredItem('')
@@ -45,7 +40,7 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
                         color: 'content.tint2',
                     }}
                 >
-                    {label}
+                    {name}
                     <Box
                         as="span"
                         display="block"
@@ -61,7 +56,7 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
             </Link>
 
             {
-                children.length ? (
+                folder.length ? (
                     <>
                         <Box
                             display={isHovered ? 'block' : 'none'}
@@ -78,13 +73,13 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
                                 pt="2"
                                 pb="4"
                             >
-                                {children.map(child => {
-                                    const { label, slug } = child;
-                                    const isActive = currentTab === slug;
+                                {folder.map(child => {
+                                    const { name, path, title } = child;
+                                    const isActive = currentPath === path;
                                     return (
                                         <Link
-                                            key={label}
-                                            to={`${href}/${slug}`}
+                                            key={name}
+                                            to={path}
                                             onClick={() => {
                                                 setHoveredItem('')
                                             }}
@@ -96,7 +91,7 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
                                                 }}
                                                 whiteSpace="nowrap"
                                             >
-                                                {label}
+                                                {title}
                                             </Text>
                                         </Link>
                                     )
@@ -112,11 +107,8 @@ const NavItem = ({ nav, isActive, isHovered, currentTab, setHoveredItem }) => {
 };
 
 const Header = () => {
-    const location = useLocation();
+    const { pathname: currentPath } = useLocation();
     const [hoveredItem, setHoveredItem] = useState('');
-
-    const segments = location.pathname.split("/");
-    const [_, section, currentTab ]= segments;
 
     return (
         <>
@@ -139,24 +131,23 @@ const Header = () => {
                     onMouseLeave={() => {
                         setHoveredItem('')
                     }}
-                >{
-                        navs.map((nav) => {
-                            const { id, href = '' } = nav
-                            const isActive = `/${section}` === href;
-                            const isHovered = hoveredItem === href;
+                >{pages.map((nav) => {
+                    const { name, path, folder = [] } = nav
+                    const isActive = currentPath === path || folder.some(nav => nav.path === currentPath);
+                    const isHovered = hoveredItem === name;
 
-                            return (
-                                <NavItem
-                                    key={id}
-                                    nav={nav}
-                                    currentTab={currentTab}
-                                    isActive={isActive}
-                                    isHovered={isHovered}
-                                    setHoveredItem={setHoveredItem}
-                                />
-                            );
-                        })
-                    }</Flex>
+                    return (
+                        <NavItem
+                            key={name}
+                            nav={nav}
+                            currentPath={currentPath}
+                            isActive={isActive}
+                            isHovered={isHovered}
+                            setHoveredItem={setHoveredItem}
+                        />
+                    );
+                })}
+                </Flex>
             </Flex >
         </>
     )

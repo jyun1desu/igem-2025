@@ -32,8 +32,8 @@ const fadeInUp = {
     }),
 };
 
-const MotionBox = motion(Box);
-const MotionTag = motion(Tag);
+const MotionBox = motion.create(Box);
+const MotionTag = motion.create(Tag);
 
 const Pointer = ({ top, left, rotate, color = "content.tint1", width = 10, withEnd = false, endWidth = 4 }) => {
     return (

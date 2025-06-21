@@ -5,13 +5,14 @@ import FullHeightSectionContainer from "@/components/FullHeightSectionContainer"
 import { RotatingTags } from "../../components/RotatingTags";
 import Carousel from "../../components/Carousel";
 import { EXPLORE_MORE_LINKS } from "./const";
-import RedHeartWithTearDrop, { NormalHeart } from "../../components/Heart";
+import { NormalHeart } from "../../components/Heart";
 import Approaches from "./Approaches";
+import StickyDescriptions from "./StickyDescriptions";
 
 const tags = ["fast", "accurate", "easy access", "portable", "cost-friendly"];
 
-export const MotionBox = motion(Box);
-export const MotionText = motion(Text);
+export const MotionBox = motion.create(Box);
+export const MotionText = motion.create(Text);
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -43,11 +44,52 @@ const SlideContainer = ({ children, ...props }) => {
     return <Flex minWidth="956px" gap="6" mb="10%" alignItems="center" {...props}>{children}</Flex>
 }
 
+// export function useWheelScroll100dvh({ setIndex }) {
+//     const isAnimating = useRef(false);
+
+//     useEffect(() => {
+//         const vhMinusOffset = window.innerHeight - 70;
+//         document.body.style.overflow = 'hidden';
+
+//         const handleWheel = throttle((e) => {
+//             e.preventDefault();
+
+//             if (isAnimating.current) return;
+//             isAnimating.current = true;
+
+//             const currentScroll = window.scrollY || window.pageYOffset;
+//             const delta = e.deltaY;
+
+//             let targetScroll = currentScroll;
+
+//             if (delta > 0) {
+//                 targetScroll = currentScroll + vhMinusOffset;
+//             } else if (delta < 0) {
+//                 targetScroll = currentScroll - vhMinusOffset;
+//                 if (targetScroll < 0) targetScroll = 0;
+//             }
+
+//             window.scrollTo({
+//                 top: targetScroll,
+//                 behavior: "smooth",
+//             });
+
+//             setTimeout(() => {
+//                 isAnimating.current = false;
+//             }, 1000);
+//         }, 1000);
+
+//         window.addEventListener("wheel", handleWheel, { passive: false });
+
+//         return () => {
+//             document.body.style.overflow = '';
+//             window.removeEventListener("wheel", handleWheel);
+//             handleWheel.cancel();
+//         };
+//     }, []);
+// }
+
 const Home = () => {
-    const { ref: section1Ref, inView: section1InView } = useInView({ triggerOnce: true, threshold: 0.3 });
-    const { ref: section2Ref, inView: section2InView } = useInView({ triggerOnce: true, threshold: 0.3 });
-    const { ref: section3Ref, inView: section3InView } = useInView({ triggerOnce: true, threshold: 0.3 });
-    const { ref: section4Ref, inView: section4InView } = useInView({ triggerOnce: true, threshold: 0.3 });
     const { ref: section5Ref, inView: section5InView } = useInView({ triggerOnce: true, threshold: 0.3 });
 
     return (
@@ -63,76 +105,7 @@ const Home = () => {
                     </Box>
                 </SlideContainer>
             </FullHeightSectionContainer>
-            <FullHeightSectionContainer>
-                <SlideContainer>
-                    <RedHeartWithTearDrop withAnimation={true} hideRightDrop={true} />
-                    <MotionBox
-                        ref={section1Ref}
-                        variants={fadeInUp}
-                        initial="hidden"
-                        animate={section1InView ? "visible" : "hidden"}
-                    >
-                        <Text color="content.primary" textStyle="xl">Did you know that…</Text>
-                        <Text color="content.primary" textStyle="2xl">
-                            <HintText color="red">1/3</HintText> of the mortality cases are from <HintText color="red">heart diseases </HintText>
-                        </Text>
-                    </MotionBox>
-                </SlideContainer>
-            </FullHeightSectionContainer>
-            <FullHeightSectionContainer>
-                <SlideContainer>
-                    <RedHeartWithTearDrop withAnimation={true} disableLeftDropAnimation={true} />
-                    <MotionBox
-                        ref={section2Ref}
-                        variants={fadeInUp}
-                        initial="hidden"
-                        animate={section2InView ? "visible" : "hidden"}
-                    >
-                        <Text color="content.primary" textStyle="xl">
-                            and specifically for <HintText color="red">cardiovascular diseases (CVDs)</HintText>,
-                        </Text>
-                        <Text color="content.primary" textStyle="2xl">
-                            CVDs result in approximately <HintText color="red">18 million</HintText> deaths each year
-                        </Text>
-                    </MotionBox>
-                </SlideContainer>
-            </FullHeightSectionContainer>
-            <FullHeightSectionContainer>
-                <SlideContainer>
-                    <RedHeartWithTearDrop withAnimation={false} />
-                    <MotionBox
-                        ref={section3Ref}
-                        variants={fadeInUp}
-                        initial="hidden"
-                        animate={section3InView ? "visible" : "hidden"}
-                    >
-                        <Text color="content.primary" textStyle="xl">
-                            as you are reading this …
-                        </Text>
-                        <Text color="content.primary" textStyle="2xl">
-                            one person has already passed away due to <HintText color="red">CVDs</HintText>
-                        </Text>
-                    </MotionBox>
-                </SlideContainer>
-            </FullHeightSectionContainer>
-            <FullHeightSectionContainer>
-                <SlideContainer>
-                    <RedHeartWithTearDrop withAnimation={false} />
-                    <MotionBox
-                        ref={section4Ref}
-                        variants={fadeInUp}
-                        initial="hidden"
-                        animate={section4InView ? "visible" : "hidden"}
-                    >
-                        <Text color="content.primary" textStyle="xl">
-                            Current clinical methods may accurately identify <HintText color="red" fontWeight={400}>CVDs</HintText>, but …
-                        </Text>
-                        <Text color="content.primary" textStyle="2xl">
-                            people often suffer from <b>late diagnosis</b> or <b>insufficient resources</b>
-                        </Text>
-                    </MotionBox>
-                </SlideContainer>
-            </FullHeightSectionContainer>
+            <StickyDescriptions />
             <FullHeightSectionContainer flexDirection="column" justifyContent="flex-start" alignItems="center">
                 <Text textAlign="center" color="content.secondary" textStyle="xl">that is why we introduce</Text>
                 <MotionBox
@@ -145,7 +118,7 @@ const Home = () => {
                         <NormalHeart />
                         <Box>
                             <HeartBeatersText />
-                            <Text color="content.secondary" textStyle="xl" mt="2">
+                            <Text as="div" color="content.secondary" textStyle="xl" mt="2">
                                 <Text as="span" mr="1">A nucleic acid-based biosensor for early diagnostic of <Text as="span" color="content.red">CVDs</Text> that is</Text>
                                 <RotatingTags tags={tags} />
                             </Text>

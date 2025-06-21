@@ -1,29 +1,38 @@
 import { Routes, Route } from "react-router";
 import Layout from "@/pages/Layout";
-import Home from '@/pages/Home';
-import Team from '@/pages/Team';
-import MeetTheTeam from '@/pages/Team/MeetTheTeam';
-import ProjectDescription from '@/pages/Project/Description';
-import WetLab from '@/pages/WetLab';
-import DryLab from '@/pages/DryLab';
-import OurModel from '@/pages/OurModel';
-import HumanPractice from '@/pages/HumanPractice';
-
+import { stringToSlug } from "@/utils";
+import { getPathMapping } from "./utils";
+import { useEffect } from "react";
 
 function App() {
+  const pathMapping = getPathMapping();
+  const currentPath =
+    location.pathname
+      .split(`${stringToSlug(import.meta.env.VITE_TEAM_NAME)}`)
+      .pop() || "/";
+
+  const title =
+    currentPath in pathMapping ? pathMapping[currentPath].title : "Not Found";
+
+  useEffect(() => {
+    document.title = `${title || ""} | ${import.meta.env.VITE_TEAM_NAME} - iGEM ${import.meta.env.VITE_TEAM_YEAR}`;
+  }, [title]);
+
 
   return (
     <Routes>
-      <Route path="/"element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="/team/meet" element={<MeetTheTeam />} />
-        <Route path="/project/description" element={<ProjectDescription />} />
-        {/* <Route path="/wet-lab/:tab" element={<WetLab />} />
-        <Route path="/dry-lab/:tab" element={<DryLab />} />
-        <Route path="/our-model" element={<OurModel />} />
-        <Route path="/human-practice/:tab" element={<HumanPractice />} /> */}
+      <Route element={<Layout />}>
+        {Object.entries(pathMapping).map(
+          ([path, { component: Component }]) => (
+            <Route
+              key={path}
+              path={path}
+              element={<Component />}
+            />
+          ),
+        )}
       </Route>
-    </Routes>
+    </Routes >
   )
 }
 

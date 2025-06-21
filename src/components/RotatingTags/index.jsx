@@ -1,9 +1,9 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import Tag from "../Tag";
 
-const MotionBox = motion(Box);
+const MotionBox = motion.create(Box);
 
 export function RotatingTags({ tags }) {
     const [index, setIndex] = useState(0);
