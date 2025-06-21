@@ -41,9 +41,9 @@ const ScrollIndicator = ({ color = 'content.tint1', }) => {
   }, [location.pathname, isScrollLocked]);
 
   useEffect(() => {
-    window.addEventListener("scroll", resetTimer);
+    window.addEventListener("wheel", resetTimer);
     return () => {
-      window.removeEventListener("scroll", resetTimer);
+      window.removeEventListener("wheel", resetTimer);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [isScrollLocked]);
