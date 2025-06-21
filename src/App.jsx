@@ -1,18 +1,13 @@
 import { Routes, Route } from "react-router";
 import Layout from "@/pages/Layout";
-import { stringToSlug } from "@/utils";
 import { getPathMapping } from "./utils";
 import { useEffect } from "react";
 
 function App() {
   const pathMapping = getPathMapping();
-  const currentPath =
-    location.pathname
-      .split(`${stringToSlug(import.meta.env.VITE_TEAM_NAME)}`)
-      .pop() || "/";
+  const currentPath = location.pathname
 
-  const title =
-    currentPath in pathMapping ? pathMapping[currentPath].title : "Not Found";
+  const title = currentPath in pathMapping ? pathMapping[currentPath].title : "Not Found";
 
   useEffect(() => {
     document.title = `${title || ""} | ${import.meta.env.VITE_TEAM_NAME} - iGEM ${import.meta.env.VITE_TEAM_YEAR}`;
